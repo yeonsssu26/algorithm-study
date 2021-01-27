@@ -8,9 +8,7 @@ int main() {
 	
 	vector<int> row = { 0,0,0 };
 	for (int i = 0; i < n; i++) {
-		if (i == 0) {
-			DP.push_back({ 1,1,1 });
-		}
+		if (i == 0) DP.push_back({ 1,1,1 });
 		else DP.push_back(row);
 	}
 	
