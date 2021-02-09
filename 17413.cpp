@@ -14,8 +14,9 @@ int main() {
 
 		// < > 태그 처리
 		if (words[i] == '<') {
-			while (reverse_stack.empty()) {
-				cout << reverse_stack.top();
+			while (!reverse_stack.empty()) {
+				cout << reverse_stack.top(); // 출력
+				reverse_stack.pop(); // pop
 			}
 			cout << words[i];
 			tag = true;
@@ -27,6 +28,15 @@ int main() {
 
 		// < 안쪽은 무조건 그대로 출력
 		else if (tag) cout << words[i];
+
+		// > 바깥쪽이고 공백을 만난 경우에는 stack pop
+		else if (!tag && words[i] == ' ') {
+			while (!reverse_stack.empty()) {
+				cout << reverse_stack.top();
+				reverse_stack.pop();
+			}
+			cout << " ";
+		}
 
 		// 태그 바깥쪽은 reverse
 		else reverse_stack.push(words[i]);
