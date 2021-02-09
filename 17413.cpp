@@ -3,44 +3,51 @@
 #include <stack>
 using namespace std;
 
+string words;
+stack<char> reverse_stack; // 순서를 바꿀 문자들을 저장
+
+void print_stack() {
+	while (!reverse_stack.empty()) {
+		cout << reverse_stack.top();
+		reverse_stack.pop();
+	}
+}
+
 int main() {
-	string words;
 	getline(cin, words); // 공백도 입력받음
 
-	stack<char> reverse_stack; // 순서를 바꿀 문자들을 저장
-
-	bool tag = false;
-	for (int i = 0; words.length(); i++) {
+	bool flag = false; // 태그 여부 판별
+	for (char ch : words) {
 
 		// < > 태그 처리
-		if (words[i] == '<') {
-			while (!reverse_stack.empty()) {
-				cout << reverse_stack.top(); // 출력
-				reverse_stack.pop(); // pop
+		if (ch == '<') {
+			print_stack();
+			cout << ch;
+			flag = true;
+		}
+		else if (ch == '>') {
+			cout << ch;
+			flag = false;
+		}
+
+		// < > 안쪽은 무조건 그대로 출력
+		else if (flag) {
+			cout << ch;
+		}
+
+		// < > 바깥쪽
+		else {
+			if (ch == ' ') { // 공백 나오면 역순 출력
+				print_stack();
+				cout << ch;
 			}
-			cout << words[i];
-			tag = true;
-		}
-		else if (words[i] == '>') {
-			cout << words[i];
-			tag = false;
-		}
-
-		// < 안쪽은 무조건 그대로 출력
-		else if (tag) cout << words[i];
-
-		// > 바깥쪽이고 공백을 만난 경우에는 stack pop
-		else if (!tag && words[i] == ' ') {
-			while (!reverse_stack.empty()) {
-				cout << reverse_stack.top();
-				reverse_stack.pop();
+			else { // 공백이 아닌 경우 stack에 저장
+				reverse_stack.push(ch);
 			}
-			cout << " ";
 		}
-
-		// 태그 바깥쪽은 reverse
-		else reverse_stack.push(words[i]);
-
 	}
+
+	// stack에 남아있는 문자 모두 출력
+	print_stack();
 	return 0;
 }
