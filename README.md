@@ -1,5 +1,4 @@
-# baekjoon
-algorithm study
+# algorithm study
 
 ## 약속
 1. 개념을 구글 검색/ 블로그/ 강의 등으로 이해될 때까지 공부
